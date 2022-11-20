@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Produtos</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    </head>
+    <body>
+ 
+        <div class="container">
+
+            <nav class="navbar bg-light">
+                <a class="navbar-brand" href="#">
+                    <img src="https://cdn-icons-png.flaticon.com/512/25/25179.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                    Detalhes da venda <span th:text="${listadeitens.id}"></span>
+                </a>
+   
+            </nav>
+            
+            <h5>Lista de Produtoss</h5>
+            <h4>Cliente: <span th:text="${listadeitens.cliente.nome}"></span></h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Descricao</th>
+                        <th>Valor</th>
+                        <th>Qtd</th>
+                        <th>Total</th>
+                    </tr>
+                   </thead>
+                   <tbody>
+                       <tr th:each="itemvenda: ${listadeitens.itens}">
+                           <td th:text="${itemvenda.produto.descricao}"></td>
+                           <td th:text="${itemvenda.produto.valor}"></td>
+                           <td th:text="${itemvenda.qtd}"></td>
+                           <td th:text="${itemvenda.total()}"></td>
+                       </tr>
+                   </tbody>
+            </table>
+            <h5>Total: R$ <span th:text="${listadeitens.total()}"></span></h5>
+            <a class="btn btn-outline-primary" href="/vendas/vendasrealiazadas">voltar</a>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    </body>
+</html>

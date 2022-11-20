@@ -1,0 +1,31 @@
+<div th:insert="fragments/header :: modelheader"></div>
+<div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${!#strings.isEmpty(erro)}">
+    <span th:text="${erro}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+</div>
+<div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${!#strings.isEmpty(success)}">
+    <span th:text="${success}"></span>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+    <div class="feature col" th:each="produto: ${produtos}">
+        <div class="feature-icon bg-primary bg-gradient">
+            <svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg>
+        </div>
+        <form action="/cart/additem" th:object="${itemVenda}" method="post" >
+            <input type="hidden" th:field="*{id}">
+
+
+            <h2 th:text="${produto.descricao}"></h2>
+            <h4>R$ <span th:text="${produto.valor}"></span> </h4>
+            <label>Qtd:</label>
+
+            <input type="hidden" th:name="produto.id" th:value="${produto.id}" />
+
+            <input type="number" name="qtd" th:field="*{qtd}"  />
+
+            <input type="submit" class="btn btn-primary" value="Comprar"/>
+        </form>
+    </div>
+</div>
+<div th:insert="fragments/footer :: modelfooter"></div>

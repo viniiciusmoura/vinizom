@@ -1,0 +1,32 @@
+<div th:insert="fragments/header :: modelheader"></div>
+
+    <a class="btn btn-success" href="/cliente/form">Cadastrar cliente</a><br>
+    <div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${!#strings.isEmpty(success)}">
+        <span th:text="${success}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <form  class="input-group p-2" th:action="@{/cliente/list}" method="get">
+        <input type="search" name="nome" class="form-control rounded" placeholder="Nome..." aria-label="Search" aria-describedby="search-addon" />
+        <input type="submit" class="btn btn-outline-primary" value="Pesquisar"/>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tr th:each="p : ${pessoaFisica}">
+            <td th:text="${p.id}"> </td>
+            <td th:text="${p.nome}"> </td>
+            <td th:text="${p.cpf}"> </td>
+            <td> <a class="btn btn-warning" th:href="@{/cliente/edit/{id}(id=${p.id})}">Editar</a> </td>
+            <td> <a class="btn btn-danger" onclick="return window.confirm('Tem certeza que deseja excluir este registro?')"  th:href="@{/cliente/remove/{id}(id=${p.id})}">Excluir</a> </td>
+        </tr>
+    </table>
+<div th:insert="fragments/footer :: modelfooter" ></div>

@@ -1,0 +1,18 @@
+<div th:insert="fragments/header :: modelheader"></div>
+            <h1>Cliente</h1>
+            <div class="alert alert-danger" th:errors="${pessoaFisica.*}"></div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert" th:if="${!#strings.isEmpty(success)}">
+                <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <form th:action="${pessoaFisica.id==null} ? @{/cliente/save} : @{/cliente/update}" th:object="${pessoaFisica}" method="post">
+                <input type="hidden" th:field="*{id}">
+                <label>Nome:</label>
+                <input class="form-control" type="text" th:field="*{nome}"  placeholder="Descrição">
+                <label>CPF:</label>
+                <input class="form-control" type="text" th:field="*{cpf}"  placeholder="Valor">
+                <br>
+                <input class="btn btn-success" type="submit" value="Enviar">
+            </form><br>
+            <a href="/cliente/list" class="btn btn-outline-primary">Voltar</a>
+<div th:insert="fragments/footer :: modelfooter" ></div>

@@ -1,0 +1,23 @@
+<div th:insert="fragments/header :: modelheader"></div>
+<h2>Vendas</h2>
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        Filtar por data
+    </button>
+    <ul class="dropdown-menu">
+        <li th:each="venda: ${vendas}">
+            <a class="dropdown-item" th:href="@{/vendas/findvenda/{data}(data=${venda.data})}" th:text="${venda.data}"></a>
+        </li>
+        <li><a class="dropdown-item" th:href="@{/vendas/}">Todos</a></li>
+    </ul>
+</div>
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+       <div class="feature col text-center" th:each="venda: ${vendas}">
+           <h5>Venda N°<span th:text="${venda.id}"></span></h5>
+           <h5>Data: <span th:text="${venda.data}"></span></h5>
+           <h5>Total: R$ <span th:text="${venda.total()}"></span></h5>
+           <h5>Cliente: <span th:text="${venda.cliente.nome}"></span></h5>
+           <a th:href="@{/vendas/detalhes/{id}(id=${venda.id})}">Detalhes</a>
+       </div>
+    </div>
+<div th:insert="fragments/footer :: modelfooter" ></div>
