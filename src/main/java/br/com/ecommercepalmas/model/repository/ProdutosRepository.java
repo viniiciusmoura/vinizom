@@ -7,12 +7,13 @@ package br.com.ecommercepalmas.model.repository;
 
 import br.com.ecommercepalmas.model.entity.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author Vinícius Moura
  */
-
+@Repository
 public interface ProdutosRepository extends JpaRepository<Produto, Long> {
     
 }
