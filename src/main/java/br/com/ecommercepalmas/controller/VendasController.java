@@ -8,11 +8,9 @@ package br.com.ecommercepalmas.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
-import br.com.ecommercepalmas.model.entity.ItemVenda;
-import br.com.ecommercepalmas.model.entity.PessoaFisica;
+import br.com.ecommercepalmas.model.entity.Cliente;
 import br.com.ecommercepalmas.model.entity.Venda;
 import br.com.ecommercepalmas.model.repository.PessoaFisicaRepository;
-import br.com.ecommercepalmas.model.repository.ProdutosRepository;
 import br.com.ecommercepalmas.model.repository.VendasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
@@ -56,7 +53,7 @@ public class VendasController {
     
     
     @PostMapping("/addcliente")
-    public String addcliente(PessoaFisica pessoaFisica){
+    public String addcliente(Cliente pessoaFisica){
         venda.setCliente(pf.findById(pessoaFisica.getId()).get());
         return "redirect:/vendas/carrinho";
     }
