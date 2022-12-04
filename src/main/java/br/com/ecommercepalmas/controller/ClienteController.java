@@ -7,7 +7,7 @@ package br.com.ecommercepalmas.controller;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
-import br.com.ecommercepalmas.model.entity.PessoaFisica;
+import br.com.ecommercepalmas.model.entity.Cliente;
 import br.com.ecommercepalmas.model.repository.PessoaFisicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,10 +31,10 @@ public class ClienteController {
     
     
     @GetMapping("/form")
-    public ModelAndView form(PessoaFisica pessoasFisica){ return new ModelAndView("/clientes/form"); }
+    public ModelAndView form(Cliente pessoasFisica){ return new ModelAndView("/clientes/form"); }
     
     @PostMapping("/save")
-    public ModelAndView save(@Valid PessoaFisica pessoafisica, BindingResult result, RedirectAttributes attributes){
+    public ModelAndView save(@Valid Cliente pessoafisica, BindingResult result, RedirectAttributes attributes){
         if(result.hasErrors())
             return form(pessoafisica);
         repositoryPF.save(pessoafisica);
@@ -57,7 +57,7 @@ public class ClienteController {
     }
     
     @PostMapping("/update")
-    public ModelAndView update(@Valid PessoaFisica pessoafisica,BindingResult result, RedirectAttributes attributes) {
+    public ModelAndView update(@Valid Cliente pessoafisica, BindingResult result, RedirectAttributes attributes) {
         if(result.hasErrors())
             return form(pessoafisica);
         repositoryPF.save(pessoafisica);
