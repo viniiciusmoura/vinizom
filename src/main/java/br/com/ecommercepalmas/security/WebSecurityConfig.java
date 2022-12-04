@@ -1,24 +1,35 @@
 package br.com.ecommercepalmas.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Configuration
-@EnableWebSecurity
+@Service
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
+    @Autowired
+    private UsuarioDetailsConfig usuarioDetailsConfig;
+
     protected void configure(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests() //define com as requisições HTTP devem ser tratadas com relação à segurança.
                 .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/produtos/list").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/home").permitAll()
@@ -34,10 +45,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureUserDetails(AuthenticationManagerBuilder builder)
             throws Exception {
-        builder
-                .inMemoryAuthentication()
-                .withUser("teste").password(new BCryptPasswordEncoder().encode("123")).roles("USER");
+        builder.userDetailsService(usuarioDetailsConfig).passwordEncoder(new BCryptPasswordEncoder());
+//                .inMemoryAuthentication()
+//                .withUser("teste").password(new BCryptPasswordEncoder().encode("123")).roles("USER");
     }
+
 
     /**
      * Com o método, instanciamos uma instância do e ncoder BCrypt e deixando o controle dessa instância como responsabilidade do Spring.
@@ -48,5 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 
 }
