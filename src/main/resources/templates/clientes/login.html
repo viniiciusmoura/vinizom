@@ -1,52 +1,57 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, user-scalable=no"/>
-  <link href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"/>
-
-</head>
-
-<body>
-<div class="row">
-  <div class="mx-auto">
-
-    <div th:if="${param.error}">
-      <div class="alert alert-danger">Usuário/senha inválidos!</div>
-    </div>
-
-    <div class="card">
-      <h5 class="card-header">Informe usuário e senha</h5>
-      <div class="card-body">
-        <form th:action="@{/login}" method="post">
-          <div class="form-group">
-            <label>Login:<input class="form-control" type="text"
-                                name="username" placeholder="Usuário"/></label>
-          </div>
-
-          <div class="form-group">
-            <label>Senha:<input class="form-control"
-                                type="password" name="password" placeholder="Senha"/></label>
-          </div>
-
-          <div class="form-group">
-            <button type="submit" class="btn btn-primary">Login</button>
-          </div>
-        </form>
+  <head>
+    <title>Vinizom | Login</title>
+    <link rel="stylesheet" type="text/css" href="/css/stylelogin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div th:if="${param.error}" class="msg">
+      <div class="alert danger-alert">
+        <h3>Usuário/Senha inválidos!</h3><a class="close">&times;</a>
       </div>
     </div>
-  </div>
-</div>
 
+    <div th:if="${!#strings.isEmpty(erroemail)}" class="msg">
+      <div class="alertEmail warning-alert">
+        <h3 th:text="${erroemail}"></h3><a class="close">&times;</a>
+      </div>
+    </div>
 
+    <div class="container">
+      <div class="main">
+        <div class="logo"></div>
+        <input type="checkbox" id="chk" aria-hidden="true">
+        <div class="signup">
+          <form th:action="@{/create}" method="post" th:object="${usuario}">
+            <label for="chk" aria-hidden="true">Criar conta</label>
+            <input type="text" name="txt" th:field="*{nome}" placeholder="Nome" required="">
+            <input type="email" name="email" th:field="*{email}" placeholder="Email" required="">
+            <input type="password" name="pswd" th:field="*{password}" placeholder="Senha" required="">
+            <button type="submit">Criar conta</button>
+          </form>
+        </div>
 
-</body>
-
-
+        <div class="login">
+          <form th:action="@{/login}" method="post">
+            <label for="chk" aria-hidden="true">Entrar</label>
+            <input type="email" name="username" placeholder="Email" required="">
+            <input type="password" name="password" placeholder="Senha" required="">
+            <button type="submit">Entrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(".close").click(function() {
+        $(this)
+                .parent(".alert")
+                .fadeOut();
+      });
+      setTimeout(() => {
+        $(".msg").children().remove()
+      },3500)
+    </script>
+  </body>
 </html>
